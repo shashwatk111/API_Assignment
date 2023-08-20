@@ -10,8 +10,6 @@ import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.TestListenerAdapter;
 
-import java.io.File;
-
 public class Listeners extends TestListenerAdapter {
 
     private static Logger log = LogManager.getLogger(Listeners.class);
