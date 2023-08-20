@@ -7,43 +7,37 @@ import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.testng.ITestContext;
-import org.testng.ITestListener;
 import org.testng.ITestResult;
+import org.testng.TestListenerAdapter;
 
 import java.io.File;
 
-public class Listeners extends TestBase implements ITestListener {
+public class Listeners extends TestListenerAdapter {
 
     private static Logger log = LogManager.getLogger(Listeners.class);
-    static ExtentReports extentReport;
-    static ExtentSparkReporter sparkReporter;
+    ExtentReports extent;
+    ExtentSparkReporter sparkReporter;
 
-    @Override
-    public void onTestStart(ITestResult result) {
-        log.info("Test Started !!");
-        extentReport = new ExtentReports();
-        File file = new File("target/ExtentReport/Extent_Report.html");
-        sparkReporter = new ExtentSparkReporter(file);
-        extentReport.attachReporter(sparkReporter);
+    public void onStart(ITestContext testContext) {
+        extent = new ExtentReports();
+        sparkReporter = new ExtentSparkReporter("target/ExtentReport/Extent_Report.html");
+        extent.attachReporter(sparkReporter);
     }
-
-    @Override
     public void onTestSuccess(ITestResult result) {
-        String testName =  result.getName();
-        ExtentTest test = extentReport.createTest(testName);
-        test.log(Status.PASS," Test Passed");
-    }
+        System.out.println("On Test Success !!"+result.getMethod());
+        ExtentTest test = extent.createTest(result.getMethod().getDescription());
+        test.log(Status.PASS, "TEST PASSED !!");
 
-    @Override
+    }
     public void onTestFailure(ITestResult result) {
-        String testName = result.getName();
-        ExtentTest test = extentReport.createTest(testName);
-        test.log(Status.FAIL," Test failed");
+        System.out.println("On Test Fail !!"+result.getMethod());
+        ExtentTest test = extent.createTest(result.getMethod().getDescription());
+        test.log(Status.FAIL, "TEST FAILED !!");
     }
 
-    @Override
-    public void onFinish(ITestContext context) {
-        extentReport.flush();
+    public void onFinish(ITestContext testContext) {
+        extent.flush();
     }
+
 
 }

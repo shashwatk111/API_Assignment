@@ -14,7 +14,7 @@ public class Test_Booker extends TestBase {
 
     private static Logger log = LogManager.getLogger(Test_Booker.class);
 
-    @Test(priority = 1,description = "Create new booking")
+    @Test(priority = 1,description = "Create Booking")
     public void createBooking()
     {
         String postBody = JsonReader.jsonDataParse("CreateBookingBody");
@@ -30,7 +30,7 @@ public class Test_Booker extends TestBase {
         Assert.assertTrue(body.contains("bookingid"),"Booking id not generated");
     }
 
-    @Test(priority = 2,description = "Get booking details")
+    @Test(priority = 2,description = "Get Booking")
     public void getBooking(){
         //Get method call
         Response response = API_Helper.getRequest(GET_URL, API_Helper.setRequestSpecification());
@@ -40,7 +40,7 @@ public class Test_Booker extends TestBase {
         Assert.assertEquals(response.getStatusCode(),200);
     }
 
-    @Test(priority = 3,description = "Update the booking details")
+    @Test(priority = 3,description = "Update Booking")
     public void updateBooking(){
         String putBody = JsonReader.jsonDataParse("UpdateBookingBody");
         //Put method call
@@ -51,7 +51,7 @@ public class Test_Booker extends TestBase {
         Assert.assertEquals(putResponse.getStatusCode(),200);
     }
 
-    @Test(priority = 4,description = "Delete booking")
+    @Test(priority = 4,description = "Delete Booking")
     public void deleteBooking(){
         //Delete method call
         Response deleteResponse = API_Helper.deleteRequest(ACCESS_TOKEN,DELETE_URL, API_Helper.setRequestSpecification());
